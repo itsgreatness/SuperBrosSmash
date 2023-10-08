@@ -1,32 +1,26 @@
 var DavidAbilities = {
     Expression: class Expression {
         render() {
-            
+
         }
     },
-    Equation: class Equation {
+    Equation: class Equation extends String {
+        static eqExprParse = /((\w|[+*/-])+)\s*?=\s*?((\w|[+*/-])+)/gm;
+        static delWhitespace = /\s/gm;
         constructor(leftSide, rightSide) {
             [this.leftSide, this.rightSide] = [leftSide, rightSide];
         }
-        add(eq) {
-            return []
-        }
-        get neg() {
-
-        }
-        mult(eq) {
-            /* Multiply by value:
-            this.mult([v,v]);
-            since for any v:
-            v=v
-            is a true equation
-            Same for add
-            neg() shorthand for mult([-1,-1]);
-             */
-            if (eq instanceof Number) {
-                let v;
-                eq = new Equation(v = new Expression(eq), v);
+        constructor(wholeEq) {
+            wholeEq.replace(this.delWhitespace, "");
+            const regex = this.eqExprParse;
+            let m;
+            while ((m = regex.exec(wholeEq)) !== null) {
+                regex.lastIndex += (m.index === regex.lastIndex);
+                [this.leftSide, this.rightSide] = [m[1], m[3]];
             }
+        }
+        toString() {
+            return this.leftSide + "=" + this.rightSide;
         }
     }
 }

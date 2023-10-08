@@ -1,6 +1,8 @@
 var DavidAbilities = {
     Expression: class Expression {
-
+        render() {
+            
+        }
     },
     Equation: class Equation {
         constructor(leftSide, rightSide) {
